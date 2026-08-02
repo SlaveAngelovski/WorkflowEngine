@@ -141,6 +141,15 @@ export function recordEvent(workflow: Workflow, message: string, type: WorkflowE
   return event
 }
 
+export function syncWorkflowState(workflow: Workflow) {
+  const allCompleted = workflow.tasks.length > 0 && workflow.tasks.every((task) => task.state === 'completed')
+
+  return {
+    ...workflow,
+    state: allCompleted ? 'completed' : workflow.state,
+  }
+}
+
 export function applyLinkTransition(workflow: Workflow, link: Link) {
   const nextTasks = workflow.tasks.map((task) => {
     if (link.targetTaskIds.includes(task.id)) {
@@ -196,8 +205,10 @@ export function setTaskState(workflow: Workflow, taskId: string, newState: State
   const stateEvent = recordEvent(updatedWorkflow, `${task.name} changed to ${newState}`, 'task-state-changed')
   events.unshift(stateEvent)
 
+  const synchronizedWorkflow = syncWorkflowState(updatedWorkflow)
+
   return {
-    workflow: updatedWorkflow,
+    workflow: synchronizedWorkflow,
     events,
   }
 }
