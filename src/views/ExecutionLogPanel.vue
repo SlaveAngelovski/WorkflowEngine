@@ -1,24 +1,18 @@
 <template>
-  <section class="panel">
-    <h2>Execution Log</h2>
+  <PanelCard title="Execution Log">
     <ul>
       <li>Sign Up moved to Completed</li>
       <li>Verify Email moved to In Progress</li>
       <li>Add Profile moved to In Progress</li>
     </ul>
-  </section>
+  </PanelCard>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import PanelCard from '../components/PanelCard.vue'
+</script>
 
 <style scoped>
-.panel {
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  padding: 1rem;
-  background: #fff;
-}
-
 ul {
   list-style: none;
   padding: 0;

@@ -6,9 +6,9 @@
         <p>Create workflows, manage tasks, connect links, and observe runtime updates.</p>
       </div>
       <div class="workflow-page__actions">
-        <button type="button">Create Workflow</button>
-        <button type="button">Add Task</button>
-        <button type="button">Add Link</button>
+        <BaseButton>Create Workflow</BaseButton>
+        <BaseButton>Add Task</BaseButton>
+        <BaseButton>Add Link</BaseButton>
       </div>
     </header>
 
@@ -25,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import BaseButton from '../components/BaseButton.vue'
 import WorkflowEditorPanel from './WorkflowEditorPanel.vue'
 import TaskListPanel from './TaskListPanel.vue'
 import LinkListPanel from './LinkListPanel.vue'

@@ -1,26 +1,21 @@
 <template>
-  <section class="panel">
-    <h2>Links</h2>
+  <PanelCard title="Links">
     <ul>
       <li>
         <span>Sign Up → Verify Email</span>
         <span class="badge">Parallel</span>
-        <button type="button">Remove</button>
+        <BaseButton>Remove</BaseButton>
       </li>
     </ul>
-  </section>
+  </PanelCard>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import PanelCard from '../components/PanelCard.vue'
+import BaseButton from '../components/BaseButton.vue'
+</script>
 
 <style scoped>
-.panel {
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  padding: 1rem;
-  background: #fff;
-}
-
 ul {
   list-style: none;
   padding: 0;

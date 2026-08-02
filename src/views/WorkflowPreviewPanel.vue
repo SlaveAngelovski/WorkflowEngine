@@ -1,25 +1,19 @@
 <template>
-  <section class="panel">
-    <h2>Workflow Preview</h2>
+  <PanelCard title="Workflow Preview">
     <div class="preview-card">
       <h3>Onboarding</h3>
       <p>Sign Up: Pending</p>
       <p>Verify Email: Pending</p>
       <p>Add Profile: Pending</p>
     </div>
-  </section>
+  </PanelCard>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import PanelCard from '../components/PanelCard.vue'
+</script>
 
 <style scoped>
-.panel {
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  padding: 1rem;
-  background: #fff;
-}
-
 .preview-card {
   border: 1px solid #d0d7de;
   border-radius: 8px;
