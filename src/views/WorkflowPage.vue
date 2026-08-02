@@ -17,6 +17,7 @@
                 <TaskListPanel />
                 <LinkListPanel />
                 <ExecutionLogPanel />
+                <WorkflowJsonPanel />
             </div>
 
             <aside
@@ -63,6 +64,7 @@ import TaskEditorPanel from './TaskEditorPanel.vue'
 import LinkEditorPanel from './LinkEditorPanel.vue'
 import ExecutionLogPanel from './ExecutionLogPanel.vue'
 import WorkflowPreviewPanel from './WorkflowPreviewPanel.vue'
+import WorkflowJsonPanel from './WorkflowJsonPanel.vue'
 
 const isDrawerOpen = ref(false)
 
