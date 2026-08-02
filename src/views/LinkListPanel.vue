@@ -6,15 +6,17 @@
                 <div class="flex items-start justify-between gap-3">
                     <div class="min-w-0 flex-1">
                         <p class="font-medium text-slate-800">{{ link.name }}</p>
-                        <p class="mt-1 text-sm text-slate-600">{{ getLinkLabel(link) }}</p>
+                        <div class="mt-2 rounded-md border border-slate-200 bg-white p-2">
+                            <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400">Transition</p>
+                            <p class="mt-1 text-sm text-slate-700">{{ getLinkDescription(link) }}</p>
+                        </div>
                         <div class="mt-2 flex flex-wrap gap-2 text-xs text-slate-500">
-                            <span class="rounded-full bg-white px-2 py-1">{{ link.linkType }}</span>
-                            <span class="rounded-full bg-white px-2 py-1">trigger: {{ link.triggerState }}</span>
-                            <span class="rounded-full bg-white px-2 py-1">target: {{ link.targetState }}</span>
-                            <span class="rounded-full bg-white px-2 py-1">targets: {{ getTargetNames(link) }}</span>
+                            <span class="rounded-full bg-white px-2 py-1">{{ formatLinkType(link.linkType) }}</span>
+                            <span class="rounded-full bg-white px-2 py-1">From {{ getSourceName(link) }}</span>
+                            <span class="rounded-full bg-white px-2 py-1">To {{ getTargetNames(link) }}</span>
                         </div>
                         <p v-if="link.condition" class="mt-2 text-xs text-slate-500">
-                            condition: {{ link.condition.type }} {{ getConditionSummary(link) }}
+                            Condition: {{ getConditionSummary(link) }}
                         </p>
                     </div>
                     <BaseButton @click="runtime.deleteLink(link.id)">Remove</BaseButton>
@@ -32,13 +34,45 @@ import type { Link } from '../types/workflow'
 
 const runtime = workflowRuntime
 
+function getSourceName(link: Link) {
+    return runtime.workflow.value.tasks.find((task) => task.id === link.sourceTaskId)?.name ?? link.sourceTaskId
+}
+
 function getLinkLabel(link: Link) {
-    const source = runtime.workflow.value.tasks.find((task) => task.id === link.sourceTaskId)?.name ?? link.sourceTaskId
+    const source = getSourceName(link)
     const targets = link.targetTaskIds
         .map((targetId) => runtime.workflow.value.tasks.find((task) => task.id === targetId)?.name ?? targetId)
         .join(', ')
 
     return `${source} → ${targets}`
+}
+
+function getLinkDescription(link: Link) {
+    return `When ${getSourceName(link)} is ${formatStateLabel(link.triggerState)}, it updates ${getTargetNames(link)} to ${formatStateLabel(link.targetState)}.`
+}
+
+function formatStateLabel(state: string) {
+    switch (state) {
+        case 'pending':
+            return 'Pending'
+        case 'in-progress':
+            return 'In Progress'
+        case 'completed':
+            return 'Completed'
+        default:
+            return state
+    }
+}
+
+function formatLinkType(linkType: string) {
+    switch (linkType) {
+        case 'default':
+            return 'Default transition'
+        case 'conditional':
+            return 'Conditional transition'
+        default:
+            return linkType
+    }
 }
 
 function getConditionSummary(link: Link) {
