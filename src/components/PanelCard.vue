@@ -1,6 +1,6 @@
 <template>
-  <section class="panel-card">
-    <h2 v-if="title">{{ title }}</h2>
+  <section class="rounded-lg border border-slate-300 bg-white p-4 shadow-sm">
+    <h2 v-if="title" class="mb-3 text-lg font-semibold text-slate-800">{{ title }}</h2>
     <slot />
   </section>
 </template>
@@ -10,12 +10,3 @@ defineProps<{
   title?: string
 }>()
 </script>
-
-<style scoped>
-.panel-card {
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  padding: 1rem;
-  background: #fff;
-}
-</style>

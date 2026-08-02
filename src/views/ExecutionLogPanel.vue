@@ -1,6 +1,6 @@
 <template>
   <PanelCard title="Execution Log">
-    <ul>
+    <ul class="flex flex-col gap-2 text-sm text-slate-600">
       <li>Sign Up moved to Completed</li>
       <li>Verify Email moved to In Progress</li>
       <li>Add Profile moved to In Progress</li>
@@ -11,14 +11,3 @@
 <script setup lang="ts">
 import PanelCard from '../components/PanelCard.vue'
 </script>
-
-<style scoped>
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-</style>

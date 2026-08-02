@@ -1,18 +1,18 @@
 <template>
-  <section class="workflow-page">
-    <header class="workflow-page__header">
+  <section class="flex flex-col gap-4 p-4">
+    <header class="flex flex-wrap items-center justify-between gap-4">
       <div>
-        <h1>Workflow Engine</h1>
-        <p>Create workflows, manage tasks, connect links, and observe runtime updates.</p>
+        <h1 class="text-2xl font-semibold text-slate-900">Workflow Engine</h1>
+        <p class="text-sm text-slate-600">Create workflows, manage tasks, connect links, and observe runtime updates.</p>
       </div>
-      <div class="workflow-page__actions">
+      <div class="flex gap-2">
         <BaseButton>Create Workflow</BaseButton>
         <BaseButton>Add Task</BaseButton>
         <BaseButton>Add Link</BaseButton>
       </div>
     </header>
 
-    <div class="workflow-page__grid">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
       <WorkflowEditorPanel />
       <TaskListPanel />
       <LinkListPanel />
@@ -34,30 +34,3 @@ import LinkEditorPanel from './LinkEditorPanel.vue'
 import ExecutionLogPanel from './ExecutionLogPanel.vue'
 import WorkflowPreviewPanel from './WorkflowPreviewPanel.vue'
 </script>
-
-<style scoped>
-.workflow-page {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.workflow-page__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-.workflow-page__actions {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.workflow-page__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(280px, 1fr));
-  gap: 1rem;
-}
-</style>

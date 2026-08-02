@@ -1,14 +1,14 @@
 <template>
   <PanelCard title="Tasks">
-    <ul>
-      <li>
+    <ul class="flex flex-col gap-3">
+      <li class="flex items-center justify-between gap-3">
         <span>Sign Up</span>
-        <span class="badge">Pending</span>
+        <span class="text-sm text-slate-500">Pending</span>
         <BaseButton>Remove</BaseButton>
       </li>
-      <li>
+      <li class="flex items-center justify-between gap-3">
         <span>Verify Email</span>
-        <span class="badge">Pending</span>
+        <span class="text-sm text-slate-500">Pending</span>
         <BaseButton>Remove</BaseButton>
       </li>
     </ul>
@@ -19,26 +19,3 @@
 import PanelCard from '../components/PanelCard.vue'
 import BaseButton from '../components/BaseButton.vue'
 </script>
-
-<style scoped>
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.badge {
-  font-size: 0.8rem;
-  color: #57606a;
-}
-</style>

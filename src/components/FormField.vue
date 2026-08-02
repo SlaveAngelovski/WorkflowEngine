@@ -1,6 +1,6 @@
 <template>
-  <label class="form-field">
-    <span class="form-field__label">{{ label }}</span>
+  <label class="mt-3 flex flex-col gap-1">
+    <span class="text-sm font-semibold text-slate-700">{{ label }}</span>
     <slot />
   </label>
 </template>
@@ -10,16 +10,3 @@ defineProps<{
   label: string
 }>()
 </script>
-
-<style scoped>
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-top: 0.75rem;
-}
-
-.form-field__label {
-  font-weight: 600;
-}
-</style>

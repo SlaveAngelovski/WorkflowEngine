@@ -1,9 +1,9 @@
 <template>
   <PanelCard title="Links">
-    <ul>
-      <li>
+    <ul class="flex flex-col gap-3">
+      <li class="flex items-center justify-between gap-3">
         <span>Sign Up → Verify Email</span>
-        <span class="badge">Parallel</span>
+        <span class="text-sm text-slate-500">Parallel</span>
         <BaseButton>Remove</BaseButton>
       </li>
     </ul>
@@ -14,26 +14,3 @@
 import PanelCard from '../components/PanelCard.vue'
 import BaseButton from '../components/BaseButton.vue'
 </script>
-
-<style scoped>
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.badge {
-  font-size: 0.8rem;
-  color: #57606a;
-}
-</style>
