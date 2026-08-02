@@ -50,7 +50,15 @@ function getConditionSummary(link: Link) {
         .map((taskId) => runtime.workflow.value.tasks.find((task) => task.id === taskId)?.name ?? taskId)
         .join(', ')
 
-    return taskNames ? `on ${taskNames} = ${link.condition.expectedState}` : `= ${link.condition.expectedState}`
+    if (!taskNames) {
+        return ''
+    }
+
+    if (link.condition.expectedState) {
+        return `on ${taskNames} = ${link.condition.expectedState}`
+    }
+
+    return `on ${taskNames}`
 }
 
 function getTargetNames(link: Link) {

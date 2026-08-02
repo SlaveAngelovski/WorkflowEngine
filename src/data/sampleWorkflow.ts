@@ -90,6 +90,7 @@ export const sampleWorkflow: Workflow = {
       condition: {
         type: 'all-completed',
         taskIds: ['task-consent', 'task-setup'],
+        expectedState: 'completed',
       },
     },
   ],
