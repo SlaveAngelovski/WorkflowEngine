@@ -10,10 +10,9 @@
     "test:unit": "vitest",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
-    "lint": "run-s \"lint:*\"",
-    "lint:oxlint": "oxlint . --fix",
+    "lint": "npm run lint:eslint",
     "lint:eslint": "eslint . --fix --cache",
-    "format": "prettier --write --experimental-cli src/"
+    "format": "prettier --write src/"
   },
   "dependencies": {
     "vue": "^3.5.40"
@@ -29,12 +28,10 @@
     "@vue/tsconfig": "^0.9.1",
     "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-oxlint": "~1.73.0",
     "eslint-plugin-vue": "~10.9.2",
     "jiti": "^2.7.0",
     "jsdom": "^29.1.1",
     "npm-run-all2": "^9.0.2",
-    "oxlint": "~1.74.0",
     "prettier": "3.9.5",
     "typescript": "~6.0.0",
     "vite": "^8.1.5",
