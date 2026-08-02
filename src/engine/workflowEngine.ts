@@ -150,6 +150,42 @@ export function syncWorkflowState(workflow: Workflow): Workflow {
   }
 }
 
+function propagateRollback(workflow: Workflow, taskId: string, visited = new Set<string>()): Workflow {
+  if (visited.has(taskId)) {
+    return workflow
+  }
+
+  visited.add(taskId)
+
+  let nextWorkflow: Workflow = workflow
+  const outgoingLinks = getOutgoingLinks(nextWorkflow, taskId)
+
+  outgoingLinks.forEach((link) => {
+    const updatedTasks: Task[] = nextWorkflow.tasks.map((task) => {
+      if (!link.targetTaskIds.includes(task.id)) {
+        return task
+      }
+
+      if (task.state === 'pending') {
+        return task
+      }
+
+      return { ...task, state: 'pending' as State }
+    })
+
+    nextWorkflow = {
+      ...nextWorkflow,
+      tasks: updatedTasks,
+    }
+
+    link.targetTaskIds.forEach((targetTaskId) => {
+      nextWorkflow = propagateRollback(nextWorkflow, targetTaskId, visited)
+    })
+  })
+
+  return nextWorkflow
+}
+
 export function applyLinkTransition(workflow: Workflow, link: Link, sourceState: State): Workflow {
   const nextTasks: Task[] = workflow.tasks.map((task) => {
     if (!link.targetTaskIds.includes(task.id)) {
@@ -186,7 +222,7 @@ export function setTaskState(workflow: Workflow, taskId: string, newState: State
   const updatedTask = { ...task, state: newState }
   const updatedTasks = workflow.tasks.map((candidate) => (candidate.id === taskId ? updatedTask : candidate))
 
-  const updatedWorkflow: Workflow = {
+  let updatedWorkflow: Workflow = {
     ...workflow,
     tasks: updatedTasks,
   }
@@ -196,7 +232,7 @@ export function setTaskState(workflow: Workflow, taskId: string, newState: State
 
   outgoingLinks.forEach((link) => {
     const shouldFireForward = link.triggerState === newState && evaluateCondition(updatedWorkflow, link.condition)
-    const shouldRollback = newState === 'pending' && evaluateCondition(updatedWorkflow, link.condition)
+    const shouldRollback = newState === 'pending'
 
     if (!shouldFireForward && !shouldRollback) {
       return
@@ -208,6 +244,10 @@ export function setTaskState(workflow: Workflow, taskId: string, newState: State
 
     updatedWorkflow.tasks = transitionedWorkflow.tasks
   })
+
+  if (newState === 'pending') {
+    updatedWorkflow = propagateRollback(updatedWorkflow, taskId)
+  }
 
   const stateEvent = recordEvent(updatedWorkflow, `${task.name} changed to ${newState}`, 'task-state-changed')
   events.unshift(stateEvent)
