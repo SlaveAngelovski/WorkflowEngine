@@ -141,19 +141,27 @@ export function recordEvent(workflow: Workflow, message: string, type: WorkflowE
   return event
 }
 
-export function syncWorkflowState(workflow: Workflow) {
+export function syncWorkflowState(workflow: Workflow): Workflow {
   const allCompleted = workflow.tasks.length > 0 && workflow.tasks.every((task) => task.state === 'completed')
 
   return {
     ...workflow,
-    state: allCompleted ? 'completed' : workflow.state,
+    state: allCompleted ? 'completed' : 'pending',
   }
 }
 
-export function applyLinkTransition(workflow: Workflow, link: Link) {
-  const nextTasks = workflow.tasks.map((task) => {
-    if (link.targetTaskIds.includes(task.id)) {
+export function applyLinkTransition(workflow: Workflow, link: Link, sourceState: State): Workflow {
+  const nextTasks: Task[] = workflow.tasks.map((task) => {
+    if (!link.targetTaskIds.includes(task.id)) {
+      return task
+    }
+
+    if (sourceState === link.triggerState) {
       return { ...task, state: link.targetState }
+    }
+
+    if (sourceState === 'pending' && task.state === link.targetState) {
+      return { ...task, state: 'pending' }
     }
 
     return task
@@ -187,15 +195,14 @@ export function setTaskState(workflow: Workflow, taskId: string, newState: State
   const outgoingLinks = getOutgoingLinks(updatedWorkflow, taskId)
 
   outgoingLinks.forEach((link) => {
-    if (link.triggerState !== newState) {
+    const shouldFireForward = link.triggerState === newState && evaluateCondition(updatedWorkflow, link.condition)
+    const shouldRollback = newState === 'pending' && evaluateCondition(updatedWorkflow, link.condition)
+
+    if (!shouldFireForward && !shouldRollback) {
       return
     }
 
-    if (!evaluateCondition(updatedWorkflow, link.condition)) {
-      return
-    }
-
-    const transitionedWorkflow = applyLinkTransition(updatedWorkflow, link)
+    const transitionedWorkflow = applyLinkTransition(updatedWorkflow, link, newState)
     const event = recordEvent(transitionedWorkflow, `${task.name} triggered ${link.name}`, 'link-triggered')
     events.push(event)
 
