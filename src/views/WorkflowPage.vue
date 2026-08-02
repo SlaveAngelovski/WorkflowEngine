@@ -14,7 +14,7 @@
         </header>
 
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <WorkflowPreviewPanel />
+            <WorkflowPreviewPanel class="col-span-2" />
             <WorkflowEditorPanel />
             <TaskListPanel />
             <LinkListPanel />
