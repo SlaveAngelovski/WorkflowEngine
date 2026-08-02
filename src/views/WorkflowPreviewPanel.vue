@@ -1,7 +1,7 @@
 <template>
-  <PanelCard title="Workflow Preview">
-    <WorkflowPreviewVisual :workflow="workflow" />
-  </PanelCard>
+    <PanelCard title="Workflow Preview">
+        <WorkflowPreviewVisual :workflow="workflow" />
+    </PanelCard>
 </template>
 
 <script setup lang="ts">
