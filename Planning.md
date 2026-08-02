@@ -97,7 +97,7 @@ The user experience
 Main UI layout:
 * WorkflowPage
     * header with workflow name and current workflow state
-    * toolbar with buttons to create workflow, add task, add link, and reset the view
+    * toolbar with buttons to create workflow, add task, add link, and reset the view( dont use css transitions, gradients, shadows), but use Tailwind classes
 * WorkflowEditorPanel
     * form to create and edit the workflow name and state
 * TaskListPanel
