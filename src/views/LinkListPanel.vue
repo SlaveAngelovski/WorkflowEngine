@@ -5,7 +5,7 @@
                 class="flex items-center justify-between gap-3">
                 <span>{{ getLinkLabel(link) }}</span>
                 <span class="text-sm text-slate-500">{{ link.linkType }}</span>
-                <BaseButton>Remove</BaseButton>
+                <BaseButton @click="runtime.deleteLink(link.id)">Remove</BaseButton>
             </li>
         </ul>
     </PanelCard>
