@@ -6,6 +6,20 @@ A small Vue 3 + TypeScript workflow engine prototype for modeling task-based flo
 
 A workflow contains tasks and links. When a task changes state, the engine checks the outgoing links and updates the linked tasks accordingly. The runtime also records events and keeps the workflow state in sync.
 
+
+The project is structured as:
+- Presentation layer: Vue components and panels
+- Application layer: workflow runtime wrapper
+- Domain layer: workflow engine pure functions
+- Data layer: sample workflow and in memory state
+
+The flow is:
+- UI calls runtime method
+- runtime calls workflow engine
+- engine returns new state
+- runtime updates the shared in-memory state
+- Vue components rerender
+
 ## Assumptions
 
 - Workflows are modeled as simple directed graphs of tasks and transitions.
@@ -31,3 +45,5 @@ My main points of guidance were:
 - building a custom runtime model instead of using a ready-made state library,
 - making the links and their states visible so the reviewer could clearly see how the workflow logic works,
 - adjusting the workflow behavior based on the planning document and the goal of making the engine feel like a real prototype, not just a static example.
+
+
